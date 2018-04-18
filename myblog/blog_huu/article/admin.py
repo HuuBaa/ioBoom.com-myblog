@@ -6,7 +6,18 @@ from .models import Tag,Article,Comment,UserProfile
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title','post_time','author')
 
-admin.site.register(Tag)
+class TagAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug': ('name',)}
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('article','post_time','author')
+
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('username',)
+
+
+
+admin.site.register(Tag,TagAdmin)
 admin.site.register(Article,ArticleAdmin)
-admin.site.register(Comment)
-admin.site.register(UserProfile)
+admin.site.register(Comment,CommentAdmin)
+admin.site.register(UserProfile,UserProfileAdmin)

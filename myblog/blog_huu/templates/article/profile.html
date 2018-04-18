@@ -1,0 +1,24 @@
+{% extends 'article/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+Profile
+{% endblock %}
+
+{% block body_block %}
+
+<div class="form-wrapper">
+	<form method="post" action=".">
+		{% if form.errors %}
+			{% include "users/partials/errors.html" %}
+		{% endif %}
+		{% csrf_token %}
+		{% for field in form %}
+			{% include "users/partials/field.html" %}
+		{% endfor %}
+		<div class="button-wrapper submit">
+			<input type="submit" value="submit" />
+		</div>
+	</form>
+</div>
+{% endblock %}

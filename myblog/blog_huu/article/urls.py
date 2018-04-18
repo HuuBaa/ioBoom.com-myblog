@@ -4,6 +4,8 @@
 from django.conf.urls import url
 from . import views
 
+app_name='article'
+
 urlpatterns=[
-    url(r'^all/$',views.list_all_articles,name='list_all_articles')
+    url(r'^all/$',views.all_articles,name='all_articles'),
 ]

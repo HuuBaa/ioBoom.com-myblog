@@ -1,0 +1,23 @@
+{% extends 'article/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+Home
+{% endblock %}
+
+{% block body_block %}
+
+{% if articles %}
+    {% for article in articles %}
+    <div style="border: 1px solid black">
+        <h2>{{article.title}}</h2>
+        by {{article.author.username}}
+        <p>{{article.content}}</p>
+    </div>
+    {% endfor %}
+{% else %}
+<p>没有文章</p>
+{% endif%}
+
+
+{% endblock %}

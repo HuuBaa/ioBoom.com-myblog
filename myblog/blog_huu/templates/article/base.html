@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Huu-{% block title_block %}Huu{% endblock %}</title>
+    {% block style_block %}
+    {% endblock %}
+</head>
+<body>
+    {% block body_block %}
+    {% endblock %}
+    {% block js_block %}
+    {% endblock %}
+</body>
+</html>
