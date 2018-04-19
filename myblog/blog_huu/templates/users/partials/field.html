@@ -5,7 +5,7 @@
 {% elif field|is_honeypot %}
 	{% include "users/partials/honeypot.html" %}
 {% else %}
-	<div class="field-wrapper {{ field|input_class }} {{ field.css_classes }}{% if field|is_checkbox %} checkbox{% endif %}">
+	<div class="form-group {{ field|input_class }} {{ field.css_classes }}{% if field|is_checkbox %} checkbox{% endif %}">
 		{% if field.errors %}
 			<ul class="errorlist">
 				{{ field.errors|unordered_list }}

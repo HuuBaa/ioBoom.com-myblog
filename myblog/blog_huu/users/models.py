@@ -64,6 +64,7 @@ class User(AbstractUser):
     Concrete class of AbstractUser.
     Use this if you don't need to extend User.
     """
+    username=models.CharField(_('username'),max_length=12,unique=True)
 
     class Meta(AbstractUser.Meta):
         swappable = 'AUTH_USER_MODEL'

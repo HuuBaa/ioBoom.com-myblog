@@ -38,7 +38,6 @@ class Comment(models.Model):
 
 class UserProfile(models.Model):
     user=models.OneToOneField(settings.AUTH_USER_MODEL)
-    username=models.CharField(max_length=12,unique=True)
     age=models.IntegerField(blank=True,null=True)
     birthday=models.DateField(blank=True,null=True)
     picture=models.ImageField(blank=True,upload_to='profile_images',null=True)

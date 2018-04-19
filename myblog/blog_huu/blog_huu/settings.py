@@ -141,7 +141,7 @@ MEDIA_ROOT=MEDIA_DIR
 
 MEDIA_URL='/media/'
 
-# LOGIN_REDIRECT_URL='/'
+LOGIN_REDIRECT_URL='/'
 
 AUTH_USER_MODEL = 'users.User'
 
@@ -154,7 +154,7 @@ USERS_AUTO_LOGIN_ON_ACTIVATION = True
 USERS_EMAIL_CONFIRMATION_TIMEOUT_DAYS = 3
 
 # Specifies minimum length for passwords:
-USERS_PASSWORD_MIN_LENGTH = 5
+USERS_PASSWORD_MIN_LENGTH = 8
 
 # Specifies maximum length for passwords:
 USERS_PASSWORD_MAX_LENGTH = None

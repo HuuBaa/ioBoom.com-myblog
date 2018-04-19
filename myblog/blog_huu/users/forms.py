@@ -10,10 +10,11 @@ from .fields import HoneyPotField, PasswordField, UsersEmailField
 class UserCreationForm(forms.ModelForm):
 
     error_messages = {
-        'duplicate_email': _('用户已经存在！'),
-        'password_mismatch': _('The two password fields didn\'t match.'),
+        'duplicate_email': _('邮箱已经被注册'),
+        'password_mismatch': _('两次密码不一致'),
+        'duplicate_username': _('用户名已经被使用'),
     }
-
+    username=forms.CharField(max_length=12,required=True)
     email = UsersEmailField(label=_('Email Address'), max_length=255)
     password1 = PasswordField(label=_('Password'))
     password2 = PasswordField(
@@ -23,6 +24,18 @@ class UserCreationForm(forms.ModelForm):
     class Meta:
         model = get_user_model()
         fields = ('email',)
+
+    def clean_username(self):
+        username=self.cleaned_data['username']
+        try:
+            get_user_model()._default_manager.get(username=username)
+        except get_user_model().DoesNotExist:
+            return username
+        raise forms.ValidationError(
+            self.error_messages['duplicate_username'],
+            code='duplicate_username',
+        )
+
 
     def clean_email(self):
 
@@ -51,6 +64,7 @@ class UserCreationForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit=False)
+        user.username=self.cleaned_data['username']
         user.set_password(self.cleaned_data['password1'])
         user.is_active = not settings.USERS_VERIFY_EMAIL
         if commit:

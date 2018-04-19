@@ -6,7 +6,6 @@ from .models import UserProfile
 
 class UserProfileForm(forms.ModelForm):
 
-    username = forms.CharField(max_length=12,required=True)
     age = forms.IntegerField(required=False)
     birthday = forms.DateField(required=False)
     picture = forms.ImageField(required=False)

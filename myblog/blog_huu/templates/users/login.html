@@ -1,22 +1,84 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% block style %}
+<style>
+body {
+  padding-top: 0px;
+  padding-bottom: 40px;
+  background-color: #eee;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+</style>
+{% endblock %}
 
 {% block content %}
-<div class="form-wrapper">
-	<form method="post" action=".">
-		{% if form.errors %}
+<div class="row">
+	<div class="col-md-offset-2 col-md-8">
+	{% if form.errors %}
 			{% include "users/partials/errors.html" %}
-		{% endif %}
-		{% csrf_token %}
-		{% for field in form %}
-			{% include "users/partials/field.html" %}
-		{% endfor %}
-		<div class="button-wrapper submit">
-			<input type="submit" value="{% trans 'Log in' %}" />
-		</div>
-		<input type="hidden" name="next" value="{{ next }}" />
-		<p><a href="{% url 'users_password_reset' %}">{% trans "Forgot password" %}</a></p>
-		<p><a href="{% url 'users_register' %}">{% trans "Register" %}</a></p>
-	</form>
+	{% endif %}
+	</div>
+
+	<div class="col-md-4 col-md-offset-4">
+		<form method="post" action="." class="form-signin">
+            {% csrf_token %}
+
+            <h2 class="form-signin-heading">登录</h2>
+
+            <div class="form-group">
+
+            <input type="text" name="username" value="" autofocus maxlength="254" required id="id_username" class="form-control" placeholder="邮箱地址">
+
+            </div>
+            <div class="form-group">
+
+                <input type="password" name="password" required id="id_password" class="form-control" placeholder="密码">
+            </div>
+
+            <input type="submit" value="{% trans 'Log in' %}" class="form-control  btn btn-primary" >
+
+            <input type="hidden" name="next" value="{{ next }}" />
+            <br>
+            <br>
+            <p><a href="{% url 'users_password_reset' %}">{% trans "忘记密码" %}</a></p>
+            <p><a href="{% url 'users_register' %}">{% trans "注册" %}</a></p>
+	    </form>
+	</div>
 </div>
+
 {% endblock %}
