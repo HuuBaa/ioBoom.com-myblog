@@ -1,10 +1,53 @@
 from django import forms
-from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.utils.translation import ugettext_lazy as _
 
 from .conf import settings
 from .fields import HoneyPotField, PasswordField, UsersEmailField
+from django.contrib.auth.forms import PasswordChangeForm as pcf ,PasswordResetForm as prf,SetPasswordForm as spf
+from django.contrib.auth import (
+    authenticate, get_user_model, password_validation,
+)
+
+class SetPasswordForm(spf):
+    error_messages = {
+        'password_mismatch': _("两次密码不一致"),
+    }
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        widget=forms.PasswordInput(attrs={'class':'form-control'}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={'class':'form-control'}),
+    )
+
+
+class PasswordResetForm(prf):
+    email = forms.EmailField(label=_("Email"), max_length=254,widget=forms.EmailInput(attrs={'class':'form-control'}))
+
+class PasswordChangeForm(pcf):
+
+    old_password = forms.CharField(
+        label=_("Old password"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={'autofocus': True,'class':'form-control'}),
+    )
+
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        widget=forms.PasswordInput(attrs={'class':'form-control'}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={'class':'form-control'}),
+    )
 
 
 class UserCreationForm(forms.ModelForm):
@@ -14,12 +57,12 @@ class UserCreationForm(forms.ModelForm):
         'password_mismatch': _('两次密码不一致'),
         'duplicate_username': _('用户名已经被使用'),
     }
-    username=forms.CharField(max_length=12,required=True)
-    email = UsersEmailField(label=_('Email Address'), max_length=255)
-    password1 = PasswordField(label=_('Password'))
+    username=forms.CharField(label=_('用户名'),max_length=12,required=True,widget=forms.TextInput(attrs={'class':'form-control'}))
+    email = UsersEmailField(label=_('邮箱地址'), max_length=255,widget=forms.EmailInput(attrs={'class':'form-control'}))
+    password1 = PasswordField(label=_('密码'),widget=forms.PasswordInput(attrs={'class':'form-control'}))
     password2 = PasswordField(
-        label=_('Password Confirmation'),
-        help_text=_('Enter the same password as above, for verification.'))
+        label=_('密码确认'),
+        widget=forms.PasswordInput(attrs={'class':'form-control'}))
 
     class Meta:
         model = get_user_model()

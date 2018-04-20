@@ -6,22 +6,29 @@
 	{% include "users/partials/honeypot.html" %}
 {% else %}
 	<div class="form-group {{ field|input_class }} {{ field.css_classes }}{% if field|is_checkbox %} checkbox{% endif %}">
-		{% if field.errors %}
-			<ul class="errorlist">
-				{{ field.errors|unordered_list }}
-			</ul>
-		{% endif %}
+
 		{% if field|is_checkbox %}
-			{{ field }}
+			{{ field}}
 		{% endif %}
-		<label for="{{ field.id_for_label }}"{% if field.field.required %} class="required"{% endif %}>
-			{{ field.label }}{% if field.field.required %}<span class="asterisk">*</span>{% endif %}
+
+		<label for="{{ field.id_for_label }}">
+			{{ field.label }}
 		</label>
+
 		{% if not field|is_checkbox %}
 			{{ field }}
 		{% endif %}
+		<br>
+		{% if field.errors %}
+		<div class="alert alert-danger">
+			<ul class="errorlist">
+				{{ field.errors|unordered_list }}
+			</ul>
+		</div>
+		{% endif %}
+
 		{% if field.help_text %}
-			<div class="help_text">{{ field.help_text|safe }}</div>
+			<div class="help_text alert alert-info">{{ field.help_text|safe }}</div>
 		{% endif %}
 	</div>
 {% endif %}

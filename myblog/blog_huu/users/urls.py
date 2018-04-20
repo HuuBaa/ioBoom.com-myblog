@@ -1,12 +1,10 @@
 from django.conf.urls import url
-from django.contrib.auth.views import (login, logout, password_change,
-                                       password_change_done, password_reset,
+from django.contrib.auth.views import (login, logout,
                                        password_reset_complete,
-                                       password_reset_confirm,
                                        password_reset_done)
 
 from .views import (activate, activation_complete, register,
-                    registration_closed, registration_complete)
+                    registration_closed, registration_complete,password_change,password_change_done,password_reset,password_reset_confirm)
 
 urlpatterns = [
     url(r'^register/$', register, name='users_register'),

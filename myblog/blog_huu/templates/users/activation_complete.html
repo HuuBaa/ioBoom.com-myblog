@@ -2,5 +2,8 @@
 {% load i18n %}
 
 {% block content %}
-<p>{% trans "Your account is now activated." %}</p>
+<div>
+    <h3 class="text-center">激活成功！</h3>
+    <p class="text-center"><a href="{% url 'index' %}" class="btn btn-info">返回主页</a></p>
+</div>
 {% endblock %}
