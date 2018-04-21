@@ -102,7 +102,7 @@ def password_reset_confirm(request, uidb64=None, token=None,
 
     if user is not None and token_generator.check_token(user, token):
         validlink = True
-        title = _('Enter new password')
+        title = _('输入新密码')
         if request.method == 'POST':
             form = set_password_form(user, request.POST)
             if form.is_valid():
@@ -113,7 +113,7 @@ def password_reset_confirm(request, uidb64=None, token=None,
     else:
         validlink = False
         form = None
-        title = _('Password reset unsuccessful')
+        title = _('密码重置失败')
     context = {
         'form': form,
         'title': title,
@@ -164,7 +164,7 @@ def password_reset(request,
         form = password_reset_form()
     context = {
         'form': form,
-        'title': _('Password reset'),
+        'title': _('密码重设'),
     }
     if extra_context is not None:
         context.update(extra_context)
@@ -226,7 +226,7 @@ def register(request,
         'form': form,
         'site': current_site,
         'site_name': current_site.name,
-        'title': _('Register'),
+        'title': _('注册'),
     }
 
     if extra_context is not None:  # pragma: no cover
@@ -239,7 +239,7 @@ def registration_closed(request,
                         current_app=None,
                         extra_context=None):
     context = {
-        'title': _('Registration closed'),
+        'title': _('注册关闭'),
     }
     if extra_context is not None:  # pragma: no cover
         context.update(extra_context)
@@ -252,7 +252,7 @@ def registration_complete(request,
                           extra_context=None):
     context = {
         'login_url': resolve_url(settings.LOGIN_URL),
-        'title': _('Registration complete'),
+        'title': _('注册完成'),
     }
     if extra_context is not None:  # pragma: no cover
         context.update(extra_context)
@@ -269,7 +269,7 @@ def activate(request,
              extra_context=None):
 
     context = {
-        'title': _('Account activation '),
+        'title': _('账户激活 '),
     }
 
     if post_activation_redirect is None:
@@ -295,7 +295,7 @@ def activate(request,
             messages.info(request, '感谢注册，您现在已经成功登录')
         return redirect(post_activation_redirect)
     else:
-        title = _('Email confirmation unsuccessful')
+        title = _('邮件确认失败')
         context = {
             'title': title,
         }
@@ -310,13 +310,11 @@ def activation_complete(request,
                         current_app=None,
                         extra_context=None):
     context = {
-        'title': _('Activation complete'),
+        'title': _('激活完成'),
     }
     if extra_context is not None:  # pragma: no cover
         context.update(extra_context)
     return TemplateResponse(request, template_name, context)
-
-
 
 
 
@@ -349,7 +347,7 @@ def password_change(request,
         form = password_change_form(user=request.user)
     context = {
         'form': form,
-        'title': _('Password change'),
+        'title': _('密码修改'),
     }
     if extra_context is not None:
         context.update(extra_context)
@@ -364,7 +362,7 @@ def password_change_done(request,
                   "class-based PasswordChangeDoneView().",
                   RemovedInDjango21Warning, stacklevel=2)
     context = {
-        'title': _('Password change successful'),
+        'title': _('密码修改成功'),
     }
     if extra_context is not None:
         context.update(extra_context)

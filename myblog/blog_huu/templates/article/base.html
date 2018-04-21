@@ -1,16 +1,78 @@
 <!DOCTYPE html>
-{% load staticfiles %}
+{% load i18n staticfiles %}
+{% load article_template_tags %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Huu-{% block title_block %}Huu{% endblock %}</title>
-    {% block style_block %}
+    <meta charset="utf-8">
+    <title>{% block title %}{{ title|default:"Huu的博客"}}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="{% static 'bootstrap-4.0.0/css/bootstrap.css'%}">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/code.css' %}">
+
+    <style>
+        body {
+            background-color: #eee;
+        }
+    </style>
+    {% block style %}
     {% endblock %}
 </head>
 <body>
-    {% block body_block %}
-    {% endblock %}
-    {% block js_block %}
-    {% endblock %}
+
+<nav class="navbar navbar-expand-md navbar-light bg-light mb-4 ">
+    <a class="navbar-brand mx-3" href="#">ioBoom</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+
+            <a class="nav-item nav-link {% block active-1%} {% endblock %} mx-4" href="#">主页 <span
+                    class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link mx-3 {% block active-2%} {% endblock %}" href="#">所有文章</a>
+            <a class="nav-item nav-link mx-3 {% block active-3%} {% endblock %}" href="#">留言</a>
+            <a class="nav-item nav-link mx-3 {% block active-4%} {% endblock %}" href="#">关于我</a>
+
+            {% if user.is_authenticated %}
+            <a class="nav-item nav-link mx-3" href="">{{user.username}}的资料</a>
+            <a class="nav-item nav-link mx-3" href="{% url 'users_logout' %}">注销</a>
+            {% else %}
+            <a class="nav-item nav-link mx-3" href="{% url 'users_login' %}">登录</a>
+            {% endif %}
+        </div>
+    </div>
+
+</nav>
+
+<div class="container">
+    <div class="row">
+        {% if messages %}
+        {% for message in messages %}
+        <div class=" alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-lg-9">
+            {% block content %}
+            <p>default</p>
+            {% endblock content %}
+        </div>
+        <div class="col-lg-3">
+        {% block sidebar%}
+            {% get_sidebar_tag %}
+        {% endblock %}
+        </div>
+
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<script src="{% static 'bootstrap-4.0.0/js/bootstrap.js' %}"></script>
 </body>
 </html>

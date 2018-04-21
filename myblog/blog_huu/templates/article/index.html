@@ -1,20 +1,18 @@
 {% extends 'article/base.html' %}
 {% load staticfiles %}
 
-{% block title_block %}
-Home
+{% block active-1 %}
+active
 {% endblock %}
 
-{% block body_block %}
+{% block title %}
+主页
+{% endblock %}
+
+{% block content %}
 
 {% if articles %}
-    {% for article in articles %}
-    <div style="border: 1px solid black">
-        <h2>{{article.title}}</h2>
-        by {{article.author.username}}
-        <p>{{article.content}}</p>
-    </div>
-    {% endfor %}
+    {% include "article/partials/article_list.html" %}
 {% else %}
 <p>没有文章</p>
 {% endif%}

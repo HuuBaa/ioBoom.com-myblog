@@ -20,11 +20,9 @@
 		{% endif %}
 		<br>
 		{% if field.errors %}
-		<div class="alert alert-danger">
-			<ul class="errorlist">
+			<ul class="errorlist alert alert-danger">
 				{{ field.errors|unordered_list }}
 			</ul>
-		</div>
 		{% endif %}
 
 		{% if field.help_text %}

@@ -5,10 +5,14 @@ from django.shortcuts import render,redirect,reverse,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
 from .forms import UserProfileForm
+import markdown
+from django.utils.text import slugify
+from markdown.extensions.toc import TocExtension
+
 # Create your views here.
 
 def index(request):
-    articles = Article.objects.all()
+    articles = Article.objects.order_by('-post_time').all()[:5]
     return render(request,'article/index.html',{'articles':articles})
 
 def all_articles(request):
@@ -59,13 +63,23 @@ def tag_articles(request,tag_slug):
 
 def article_detail(request,article_id):
     article=get_object_or_404(Article,id=article_id)
+
+    md = markdown.Markdown(extensions=[
+        'markdown.extensions.extra',
+        'markdown.extensions.codehilite',
+        TocExtension(slugify=slugify),
+    ])
+    article.content=md.convert(article.content)
+
     comments=article.comments.order_by('-post_time').all()
 
     con_dict={
         'article':article,
-        'comments':comments
+        'comments':comments,
+        'toc':md.toc
     }
-    return render(request,'article/',con_dict)
+
+    return render(request,'article/article_detail.html',con_dict)
 
 @login_required
 def post_comment(request,article_id):

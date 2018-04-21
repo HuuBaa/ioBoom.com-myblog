@@ -6,10 +6,12 @@ from django.conf import settings
 # Create your models here.
 
 class Article(models.Model):
-    title=models.CharField(max_length=32)
+    title=models.CharField(max_length=128)
     post_time=models.DateTimeField(default=timezone.now)
     author=models.ForeignKey(settings.AUTH_USER_MODEL,related_name='articles')
-    content=models.TextField(max_length=256*4)
+    content=models.TextField(max_length=256*8)
+    summary=models.TextField(max_length=256)
+    picture=models.ImageField(null=True,upload_to='article_images',)
     #Tag的实例可以使用t.articles查询相应tag下所有的article
     tags = models.ManyToManyField('Tag',blank=True,related_name='articles')
     likes=models.IntegerField(default=0)
