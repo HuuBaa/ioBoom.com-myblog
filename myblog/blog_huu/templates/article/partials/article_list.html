@@ -1,19 +1,9 @@
-{% block style %}
-<style>
-    .article-title:hover {
-        color: goldenrod;
-    }
 
-    .shadow:hover {
-        box-shadow: 3px 3px 5px #aaa;
-    }
-</style>
-{% endblock %}
 
 <ul class="list-unstyled">
     {% for article in articles %}
     <li class="media px-3 py-3 mb-4 shadow" style="background-color: white">
-        <img class="align-self-center mr-3 d-none d-lg-block" src="/media/{{article.picture}}" width="180"
+        <img class="align-self-center mr-3 d-none d-lg-block" src="{{MEDIA_URL}}{{article.picture}}" width="180"
              alt="Generic placeholder image">
 
         <div class="media-body" style="word-break: break-all">

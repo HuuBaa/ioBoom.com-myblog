@@ -12,8 +12,10 @@ class TagAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('article','post_time','author')
 
+class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('user',)
 
 admin.site.register(Tag,TagAdmin)
 admin.site.register(Article,ArticleAdmin)
 admin.site.register(Comment,CommentAdmin)
-admin.site.register(UserProfile)
+admin.site.register(UserProfile,UserProfileAdmin)

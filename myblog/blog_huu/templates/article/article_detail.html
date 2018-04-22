@@ -9,6 +9,7 @@
 
 
 {% block content %}
+
 <div class="card rounded-0 border-0" id="article">
     <div class="card-body">
         <h3 class="text-center text-info">{{article.title}}</h3>
@@ -23,12 +24,66 @@
         {{article.content|safe}}
 
     </div>
-
 </div>
+<div class="mt-5" id="comment">
+    {% if user.is_authenticated %}
+    <form action="{%  url 'article:article_comment' article.id %}" method="post">
+        <h4>发表评论</h4>
+        <hr>
+
+        {% csrf_token %}
+        <div class="form-group">
+            <textarea class="form-control" id="FormControlTextarea1" name="content" rows="3" required></textarea>
+        </div>
+        <div class="form-group text-right">
+
+            <button class="btn btn-info " type="submit">
+                发表评论 <i class="fa fa-comment-o"></i>
+            </button>
+        </div>
+
+    </form>
+
+    {% else %}
+    <div class="card py-2">
+       <h5 class=text-center><a href="{% url 'users_login' %}?next={{request.path}}">登录</a> 后可以发表评论</h5>
+    </div>
+
+    {% endif %}
+</div>
+
+
+<div class="card rounded-0 border-0 mt-3">
+    <h5 class="pt-4 pb-0 pl-4">{{comments.count}}条评论</h5>
+    <hr>
+    {% if comments %}
+    {% for c in comments %}
+
+    <div class="media  mt-1 px-3 ">
+        <img class="align-self-sm-start mr-3 rounded mt-1" src="{{MEDIA_URL}}{{c.author.userprofile.picture}}"
+             width="48" height="48" alt="Generic placeholder image">
+        <div class="media-body">
+            <strong><h5 class="mt-0">{{c.author.username}}</h5></strong>
+            <p class="text-muted ">#{{forloop.counter}}楼&nbsp;&nbsp;{{c.post_time|date:"Y/m/d H:i"}}</p>
+            <p>{{c.content}}</p>
+        </div>
+    </div>
+    {% if not forloop.last %}
+    <hr>
+    {% endif %}
+    {% endfor%}
+    {% else %}
+    <p class="pt-4 pb-0 pl-4">暂无评论</p>
+    {% endif %}
+</div>
+
 
 {% endblock %}
 
 {% block sidebar %}
- {{toc|safe}}
-{{block.super}}
+<div id="toc" class="mb-4 position-fixed">
+    {{toc|safe}}
+</div>
+
+
 {% endblock %}

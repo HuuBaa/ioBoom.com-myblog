@@ -27,7 +27,7 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 ">
-    <a class="navbar-brand mx-3" href="#">ioBoom</a>
+    <a class="navbar-brand mx-3" href="/">ioBoom</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -40,7 +40,8 @@
             <a class="nav-item nav-link mx-3" href="#">所有文章</a>
             <a class="nav-item nav-link mx-3" href="#">留言</a>
             <a class="nav-item nav-link mx-3" href="#">关于我</a>
-
+        </div>
+        <div class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
             <a class="nav-item nav-link mx-3" href="">{{user.username}}的资料</a>
             <a class="nav-item nav-link mx-3" href="{% url 'users_logout' %}">注销</a>
@@ -65,7 +66,12 @@
     {% endblock content %}
 
 </div>
-
+<footer class="container-fluid fixed-bottom">
+    <div class="text-center">
+        <p>浙ICP备18004209号.Powered By Django.</p>
+        <p>Copyright © 2018 Huu </p>
+    </div>
+</footer>
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
 <script src="{% static 'bootstrap-4.0.0/js/bootstrap.js' %}"></script>

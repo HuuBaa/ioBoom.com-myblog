@@ -17,6 +17,40 @@
         body {
             background-color: #eee;
         }
+
+        .article-title:hover {
+            color: goldenrod;
+        }
+
+        .shadow:hover {
+            box-shadow: 3px 3px 5px #aaa;
+        }
+
+        #toc li {
+            list-style-type: upper-roman;
+            color: #0099ff;
+
+        }
+
+        #toc li a {
+            text-decoration: none;
+        }
+
+        #toc li a:hover {
+            color: goldenrod;
+        }
+
+        #toc li li {
+            list-style-type: decimal;
+            color: #0099ff;
+        }
+
+        #toc li li li {
+            list-style-type: lower-alpha;
+            color: #0099ff;
+        }
+
+
     </style>
     {% block style %}
     {% endblock %}
@@ -24,7 +58,7 @@
 <body>
 
 <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 ">
-    <a class="navbar-brand mx-3" href="#">ioBoom</a>
+    <a class="navbar-brand mx-3" href="/">ioBoom</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
             aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -32,18 +66,21 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
 
-            <a class="nav-item nav-link {% block active-1%} {% endblock %} mx-4" href="#">主页 <span
+            <a class="nav-item nav-link {% block active-1%} {% endblock %} mx-4" href="/">主页 <span
                     class="sr-only">(current)</span></a>
             <a class="nav-item nav-link mx-3 {% block active-2%} {% endblock %}" href="#">所有文章</a>
             <a class="nav-item nav-link mx-3 {% block active-3%} {% endblock %}" href="#">留言</a>
             <a class="nav-item nav-link mx-3 {% block active-4%} {% endblock %}" href="#">关于我</a>
-
+        </div>
+        <div class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
+
             <a class="nav-item nav-link mx-3" href="">{{user.username}}的资料</a>
             <a class="nav-item nav-link mx-3" href="{% url 'users_logout' %}">注销</a>
             {% else %}
-            <a class="nav-item nav-link mx-3" href="{% url 'users_login' %}">登录</a>
+            <a class="nav-item nav-link mx-3 navbar-right" href="{% url 'users_login' %}">登录</a>
             {% endif %}
+
         </div>
     </div>
 
@@ -65,13 +102,21 @@
             {% endblock content %}
         </div>
         <div class="col-lg-3">
-        {% block sidebar%}
+            {% block sidebar%}
             {% get_sidebar_tag %}
-        {% endblock %}
+            {% endblock %}
         </div>
 
     </div>
+    <hr>
+</div >
+<footer class="container-fluid">
+<div class="text-center">
+    <p>浙ICP备18004209号.Powered By Django.</p>
+    <p>Copyright © 2018 Huu </p>
 </div>
+</footer>
+
 <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 <script src="{% static 'bootstrap-4.0.0/js/bootstrap.js' %}"></script>
 </body>
