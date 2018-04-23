@@ -12,8 +12,24 @@ from datetime import datetime,timedelta
 # Create your views here.
 
 def index(request):
-    articles = Article.objects.order_by('-post_time').all()[:5]
+    articles = Article.objects.order_by('-post_time').all()[:4]
     return render(request,'article/index.html',{'articles':articles})
+
+
+def get_range_page(paginator,current_page):
+    # 分页过多解决
+    l = len(paginator.page_range)
+    mid1 = 1
+    mid2 = l - 1
+    page_range = list(paginator.page_range)
+    if l > 10:
+        if current_page - 3 > 1:
+            mid1 = current_page - 1 - 3
+        if current_page + 4 < l - 1:
+            mid2 = current_page + 4
+        page_range[1:mid1] = [None]
+        page_range[mid2:l - 1] = [None]
+    return page_range
 
 def all_articles(request):
 
@@ -21,6 +37,8 @@ def all_articles(request):
 
     current_page=request.GET.get('page',1)
     paginator=Paginator(all_articles_list,5)
+
+    page_range=get_range_page(paginator,int(current_page)-1)
 
     try:
         all_articles_list=paginator.page(current_page)
@@ -31,10 +49,12 @@ def all_articles(request):
 
     con_dict={
         'articles':all_articles_list.object_list,
-        'page_info':all_articles_list
+        'page':all_articles_list,
+        'page_range':page_range,
+        'page_url':reverse('article:all_articles')
     }
 
-    return render(request,'article/',con_dict)
+    return render(request,'article/all_articles.html',con_dict)
 
 def tag_articles(request,tag_slug):
     tag=get_object_or_404(Tag,slug=tag_slug)
@@ -44,6 +64,8 @@ def tag_articles(request,tag_slug):
 
         current_page = request.GET.get('page', 1)
         paginator = Paginator(tag_articles_list, 5)
+
+        page_range = get_range_page(paginator, int(current_page)-1)
 
         try:
             tag_articles_list = paginator.page(current_page)
@@ -55,10 +77,20 @@ def tag_articles(request,tag_slug):
         con_dict = {
             'tag':tag,
             'articles': tag_articles_list.object_list,
-            'page_info': tag_articles_list
+            'page': tag_articles_list,
+            'page_range':page_range,
+            'page_url': reverse('article:tag_articles',args=[tag.slug,])
         }
 
-        return render(request, 'article/', con_dict)
+        return render(request, 'article/tag_articles.html', con_dict)
+
+def all_tags(request):
+    all_tags_list=Tag.objects.order_by('slug').all()
+    con_dict={
+        'all_tags':all_tags_list
+    }
+    return render(request,'article/all_tags.html',con_dict)
+
 
 def visits_handler(request,article):
     last_view = request.session.get('article_{0}_last_view'.format(article.id))  # 获取最后一次浏览本站的时间last_view
@@ -75,6 +107,8 @@ def visits_handler(request,article):
         article.save()
         last_visit_time =datetime.now()
     request.session['article_{0}_last_view'.format(article.id)] = str(last_visit_time)  # 更新session
+
+
 
 
 def article_detail(request,article_id):

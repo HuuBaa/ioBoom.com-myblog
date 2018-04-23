@@ -13,45 +13,7 @@
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="{% static 'css/code.css' %}">
 
-    <style>
-        body {
-            background-color: #eee;
-        }
-
-        .article-title:hover {
-            color: goldenrod;
-        }
-
-        .shadow:hover {
-            box-shadow: 3px 3px 5px #aaa;
-        }
-
-        #toc li {
-            list-style-type: upper-roman;
-            color: #0099ff;
-
-        }
-
-        #toc li a {
-            text-decoration: none;
-        }
-
-        #toc li a:hover {
-            color: goldenrod;
-        }
-
-        #toc li li {
-            list-style-type: decimal;
-            color: #0099ff;
-        }
-
-        #toc li li li {
-            list-style-type: lower-alpha;
-            color: #0099ff;
-        }
-
-
-    </style>
+    <link rel="stylesheet" href="{% static 'css/ioboom.css' %}">
     {% block style %}
     {% endblock %}
 </head>
@@ -68,8 +30,8 @@
 
             <a class="nav-item nav-link {% block active-1%} {% endblock %} mx-4" href="/">主页 <span
                     class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link mx-3 {% block active-2%} {% endblock %}" href="#">所有文章</a>
-            <a class="nav-item nav-link mx-3 {% block active-3%} {% endblock %}" href="#">留言</a>
+            <a class="nav-item nav-link mx-3 {% block active-2%} {% endblock %}" href="{% url 'article:all_articles' %}">全部文章</a>
+            <a class="nav-item nav-link mx-3 {% block active-3%} {% endblock %}" href="{% url 'article:all_tags'  %}">分类</a>
             <a class="nav-item nav-link mx-3 {% block active-4%} {% endblock %}" href="#">关于我</a>
         </div>
         <div class="navbar-nav ml-auto">
@@ -87,6 +49,7 @@
 </nav>
 
 <div class="container">
+
     <div class="row">
         {% if messages %}
         {% for message in messages %}

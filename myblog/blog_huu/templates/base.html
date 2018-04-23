@@ -9,18 +9,7 @@
     <meta name="author" content="">
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="{% static 'bootstrap-4.0.0/css/bootstrap.css'%}">
-    <style>
-        body {
-            background-color: #fefefe;
-        }
-
-        .form-register, .form-reset, .form-reset-confirm, .form-change-pass {
-            max-width: 400px;
-            padding: 15px;
-            margin: 0 auto;
-            min-width: 400px;
-        }
-    </style>
+<link rel="stylesheet" href="{% static 'css/ioboom.css' %}">
     {% block style %}
     {% endblock %}
 </head>
@@ -35,10 +24,10 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
 
-            <a class="nav-item nav-link {% block active-index%} active{% endblock %} mx-4" href="/">主页 <span
+            <a class="nav-item nav-link mx-4" href="/">主页 <span
                     class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link mx-3" href="#">所有文章</a>
-            <a class="nav-item nav-link mx-3" href="#">留言</a>
+            <a class="nav-item nav-link mx-3" href="{% url 'article:all_articles'  %}">所有文章</a>
+            <a class="nav-item nav-link mx-3" href="{% url 'article:all_tags'  %}">分类</a>
             <a class="nav-item nav-link mx-3" href="#">关于我</a>
         </div>
         <div class="navbar-nav ml-auto">

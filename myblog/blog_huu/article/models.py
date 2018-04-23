@@ -22,6 +22,7 @@ class Article(models.Model):
 
 class Tag(models.Model):
     name=models.CharField(max_length=32,unique=True)
+    chinese_name=models.CharField(max_length=32)
     slug=models.SlugField(unique=True)
 
     def save(self, *args, **kw):

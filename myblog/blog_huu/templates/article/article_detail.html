@@ -1,14 +1,23 @@
 {% extends 'article/base.html' %}
 {% load staticfiles %}
-{% load markdown_deux_tags %}
-
 
 {% block title %}
-{{article.title}}
+文章 | {{article.title}}
 {% endblock %}
 
 
 {% block content %}
+
+<nav aria-label="breadcrumb" id="bread">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">主页</a></li>
+
+        <li class="breadcrumb-item"><a href="{% url 'article:tag_articles' article.tags.first.slug %}">{{article.tags.first.chinese_name}}</a></li>
+
+        <li class="breadcrumb-item active" aria-current="page">{{article.title}}</li>
+    </ol>
+</nav>
+
 
 <div class="card rounded-0 border-0" id="article">
     <div class="card-body">
@@ -45,8 +54,8 @@
     </form>
 
     {% else %}
-    <div class="card py-2">
-       <h5 class=text-center><a href="{% url 'users_login' %}?next={{request.path}}">登录</a> 后可以发表评论</h5>
+    <div class="card pt-2 pb-1">
+        <h5 class=text-center><a href="{% url 'users_login' %}?next={{request.path}}">登录</a> 后可以发表评论</h5>
     </div>
 
     {% endif %}

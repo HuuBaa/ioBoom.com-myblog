@@ -13,7 +13,7 @@
             <span class="small"><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;{{article.post_time|date}}</span>
             &nbsp;
             {% for tag in article.tags.all %}
-            <span class="badge-warning badge py-1"><i class="fa fa-book"></i>&nbsp;{{tag.name}}</span>
+            <a href="{% url 'article:tag_articles' tag.slug %}"><span class="badge-info badge py-1"><i class="fa fa-book"></i>&nbsp;{{tag.chinese_name}}</span></a>
             {% endfor %}
 
             <hr>

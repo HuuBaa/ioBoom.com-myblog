@@ -1,7 +1,7 @@
 {% if form.errors and form.non_field_errors %}
-	<div class="alert alert-danger text-center">
-		<ul>
+
+		<ul class="alert alert-danger text-center">
 			{{ form.non_field_errors|unordered_list }}
 		</ul>
-	</div>
+
 {% endif %}
