@@ -12,7 +12,9 @@ def get_sidebar_tag():
     all_tags=Tag.objects.order_by('slug').all()
     for tag in all_tags:
         tag.cls_msg=random.choice(msg)
-    return {'tags_cloud':all_tags}
+
+    latest_articles=Article.objects.order_by('-post_time').all()[:5]
+    return {'tags_cloud':all_tags,'latest_articles':latest_articles}
 
 @register.inclusion_tag('article/_navbar.html')
 def get_navbar_tag():

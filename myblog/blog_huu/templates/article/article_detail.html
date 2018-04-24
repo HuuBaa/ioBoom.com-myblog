@@ -42,7 +42,7 @@
 
         {% csrf_token %}
         <div class="form-group">
-            <textarea class="form-control" id="FormControlTextarea1" name="content" rows="3" required></textarea>
+            <textarea class="form-control"  name="content" rows="3" required maxlength="128"></textarea>
         </div>
         <div class="form-group text-right">
 
@@ -93,6 +93,4 @@
 <div id="toc" class="mb-4 position-fixed">
     {{toc|safe}}
 </div>
-
-
 {% endblock %}

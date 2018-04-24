@@ -12,16 +12,15 @@
     <ol class="breadcrumb ">
         <li class="breadcrumb-item"><a href="/">主页</a></li>
         <li class="breadcrumb-item active"><a href="{% url 'article:all_tags' %}">标签</a></li>
-        <li class="breadcrumb-item active" aria-current="page">{{tag.chinese_name}}(共{{page.paginator.count}}篇)</li>
+        <li class="breadcrumb-item active" aria-current="page">{{tag.chinese_name}}（共{{page.paginator.count}}篇）</li>
     </ol>
 </nav>
-
 
 {% if articles %}
     {% include "article/partials/_article_list.html" %}
     {% include 'article/partials/_pagination.html' %}
 {% else %}
-<p 没有文章</p>
+<p> 没有文章</p>
 {% endif %}
 
 {% endblock %}

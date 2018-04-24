@@ -20,10 +20,13 @@ active
 
 {% if all_tags %}
 <ul class="list-group" id="tags">
+    <li class="list-group-item disabled">所有分类（{{all_tags|length}}）</li>
     {% for tag in all_tags%}
-    <a href="{% url 'article:tag_articles' tag.slug %}"><li class="list-group-item d-flex justify-content-between align-items-center">
-        {{tag.chinese_name}}</a>
-        <span class="badge badge-info badge-pill">{{tag.articles.count}}</span>
+    <a href="{% url 'article:tag_articles' tag.slug %}">
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            {{tag.chinese_name}}
+    </a>
+    <span class="badge badge-info badge-pill">{{tag.articles.count}} 篇</span>
     </li>
 
     {% endfor%}
@@ -31,7 +34,7 @@ active
 </ul>
 
 {% else %}
-<p 没有文章</p>
+<p 没有标签</p>
 {% endif %}
 
 {% endblock %}

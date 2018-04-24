@@ -14,7 +14,7 @@ active
 <nav aria-label="breadcrumb" id="bread">
     <ol class="breadcrumb ">
         <li class="breadcrumb-item"><a href="/">主页</a></li>
-        <li class="breadcrumb-item active" aria-current="page">全部文章(共{{page.paginator.count}}篇)</li>
+        <li class="breadcrumb-item active" aria-current="page">全部文章（共{{page.paginator.count}}篇）</li>
     </ol>
 </nav>
 
@@ -22,7 +22,7 @@ active
     {% include "article/partials/_article_list.html" %}
     {% include 'article/partials/_pagination.html'%}
 {% else %}
-<p 没有文章</p>
+<p> 没有文章</p>
 {% endif %}
 
 {% endblock %}

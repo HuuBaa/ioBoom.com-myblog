@@ -18,13 +18,13 @@ active
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img class="d-block w-100" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524498538524&di=b309d27a6af4f6d7f54909830d74cf0b&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0137fb57eb68cea84a0d304f35ef15.gif" alt="First slide">
+      <img class="d-block w-100" src="{{MEDIA_URL}}ioboom.jpg" alt="First slide">
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524498538524&di=b309d27a6af4f6d7f54909830d74cf0b&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0137fb57eb68cea84a0d304f35ef15.gif" alt="Second slide">
+      <img class="d-block w-100" src="{{MEDIA_URL}}ioboom2.jpg" alt="Second slide">
     </div>
     <div class="carousel-item">
-      <img class="d-block w-100" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1524498538524&di=b309d27a6af4f6d7f54909830d74cf0b&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0137fb57eb68cea84a0d304f35ef15.gif" alt="Third slide">
+      <img class="d-block w-100" src="{{MEDIA_URL}}ioboom3.jpg" alt="Third slide">
     </div>
   </div>
   <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -40,7 +40,7 @@ active
     {% include "article/partials/_article_list.html" %}
     <p class="text-center"><a href="{% url 'article:all_articles' %}" class="btn btn-outline-primary">查看更多文章>></a></p>
 {% else %}
-<p 没有文章</p>
+<p> 没有文章</p>
 {% endif%}
 
 {% endblock %}

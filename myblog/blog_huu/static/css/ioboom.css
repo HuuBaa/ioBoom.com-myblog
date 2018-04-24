@@ -10,6 +10,18 @@ body {
     margin: 0 auto;
     min-width: 400px;
 }
+/*sidebar*/
+#latest_articles li a:hover {
+    color: goldenrod;
+    text-decoration: none;
+}
+
+#my_website li a:hover {
+    color: goldenrod;
+    text-decoration: none;
+}
+
+
 /* all_tags */
 #tags li a:hover {
     color: goldenrod;
@@ -33,7 +45,7 @@ body {
 
 /*article_detail*/
 #toc li {
-    list-style-type: upper-roman;
+    list-style-type: cjk-ideographic;
     color: #0099ff;
 
 }
