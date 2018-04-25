@@ -68,23 +68,24 @@ class User(AbstractUser):
     email_hash =models.CharField(max_length=32,null=True)
 
     def gravatar(self, size=48, default='retro', rating='g'):
-        if not self.email_hash:
-            hash = hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
-            self.email_hash=hashlib
-            self.save()
+        if  self.email_hash:
+            hash =self.email_hash
         else:
-            hash=self.email_hash
+            hash = hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
+            self.email_hash =hash
+            self.save()
         url = 'https://www.gravatar.com/avatar/'
+
         return '{url}{hash}?s={size}&d={default}&r={rating}'.format(url=url, hash=hash, size=size, default=default,rating=rating)
 
-    def gravatar_480(self, size=480, default='retro', rating='g'):
+    def gravatar_320(self, size=320, default='retro', rating='g'):
         url = 'https://www.gravatar.com/avatar/'
-        if not self.email_hash:
-            hash = hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
-            self.email_hash=hashlib
-            self.save()
+        if  self.email_hash:
+            hash = self.email_hash
         else:
-            hash=self.email_hash
+            hash = hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
+            self.email_hash = hash
+            self.save()
         return '{url}{hash}?s={size}&d={default}&r={rating}'.format(url=url, hash=hash, size=size, default=default,rating=rating)
 
     class Meta(AbstractUser.Meta):
