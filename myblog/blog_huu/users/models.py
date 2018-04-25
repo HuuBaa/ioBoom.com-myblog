@@ -64,13 +64,28 @@ class User(AbstractUser):
     Concrete class of AbstractUser.
     Use this if you don't need to extend User.
     """
-    username=models.CharField(_('username'),max_length=12,unique=True)
+    username=models.CharField(_('username'),max_length=16,unique=True)
+    email_hash =models.CharField(max_length=32,null=True)
 
-    def gravatar(self, size=100, default='retro', rating='g'):
+    def gravatar(self, size=48, default='retro', rating='g'):
+        if not self.email_hash:
+            hash = hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
+            self.email_hash=hashlib
+            self.save()
+        else:
+            hash=self.email_hash
         url = 'https://www.gravatar.com/avatar/'
-        hash= hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
-        return '{url}{hash}?s={size}&d={default}&r={rating}'.format(url=url, hash=hash, size=size, default=default,
-                                                      rating=rating)
+        return '{url}{hash}?s={size}&d={default}&r={rating}'.format(url=url, hash=hash, size=size, default=default,rating=rating)
+
+    def gravatar_480(self, size=480, default='retro', rating='g'):
+        url = 'https://www.gravatar.com/avatar/'
+        if not self.email_hash:
+            hash = hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
+            self.email_hash=hashlib
+            self.save()
+        else:
+            hash=self.email_hash
+        return '{url}{hash}?s={size}&d={default}&r={rating}'.format(url=url, hash=hash, size=size, default=default,rating=rating)
 
     class Meta(AbstractUser.Meta):
         swappable = 'AUTH_USER_MODEL'
