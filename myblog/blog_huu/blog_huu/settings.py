@@ -10,17 +10,16 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
-import os,sys
+import os, sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-TEMPLATE_DIR=os.path.join(BASE_DIR,'templates')
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
-STATIC_DIR=os.path.join(BASE_DIR,'static')
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
-MEDIA_DIR=os.path.join(BASE_DIR,'media')
-
+MEDIA_DIR = os.path.join(BASE_DIR, 'media')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -31,8 +30,7 @@ SECRET_KEY = '@^fr@*8an-u5^r(sajx^249&s$d9)$p&vkt0tew8t_m@+h-*e#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.104','127.0.0.1']
-
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -78,19 +76,32 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'blog_huu.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         'TEST':{
+#             'NAME':'test_db.sqlite3'
+#         }
+#     },
+# }
+
+MYSQL_PASSWORD=os.environ.get('MYSQL_PASSWORD')
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'TEST':{
-            'NAME':'test_db.sqlite3'
-        }
-    },
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'localhost',
+        'NAME': 'my_blog',
+        'USER': 'root',
+        'PASSWORD':MYSQL_PASSWORD ,
+        'PORT': '3306',
+    }
 }
+
 
 
 # Password validation
@@ -111,7 +122,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -121,7 +131,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LANGUAGE_CODE = 'zh-Hans'
-TIME_ZONE='Asia/Shanghai'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -129,19 +139,18 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATICFILES_DIRS=[STATIC_DIR,]
+STATICFILES_DIRS = [STATIC_DIR, ]
 
 STATIC_URL = '/static/'
 
-MEDIA_ROOT=MEDIA_DIR
+MEDIA_ROOT = MEDIA_DIR
 
-MEDIA_URL='/media/'
+MEDIA_URL = '/media/'
 
-LOGIN_REDIRECT_URL='/'
+LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'users.User'
 
