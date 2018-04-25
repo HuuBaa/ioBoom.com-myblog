@@ -7,7 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from .conf import settings
 from .managers import UserInheritanceManager, UserManager
-
+import hashlib
 
 class AbstractUser(AbstractBaseUser, PermissionsMixin):
     USERS_AUTO_ACTIVATE = not settings.USERS_VERIFY_EMAIL
@@ -65,6 +65,12 @@ class User(AbstractUser):
     Use this if you don't need to extend User.
     """
     username=models.CharField(_('username'),max_length=12,unique=True)
+
+    def gravatar(self, size=100, default='retro', rating='g'):
+        url = 'https://www.gravatar.com/avatar/'
+        hash= hashlib.md5(self.email.lower().encode('utf-8')).hexdigest()
+        return '{url}{hash}?s={size}&d={default}&r={rating}'.format(url=url, hash=hash, size=size, default=default,
+                                                      rating=rating)
 
     class Meta(AbstractUser.Meta):
         swappable = 'AUTH_USER_MODEL'
