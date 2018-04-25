@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="{% static 'bootstrap-4.0.0/css/bootstrap.css'%}">
-<link rel="stylesheet" href="{% static 'css/ioboom.css' %}">
+    <link rel="stylesheet" href="{% static 'css/ioboom.css' %}">
     {% block style %}
     {% endblock %}
 </head>
@@ -50,9 +50,11 @@
         {% endif %}
     </div>
 
-    {% block content %}
-    <p>Use this template get you up and running with django-users2.</p>
-    {% endblock content %}
+    <div class="row">
+        {% block content %}
+        <p>Use this template get you up and running with django-users2.</p>
+        {% endblock content %}
+    </div>
 
 </div>
 <footer class="container-fluid fixed-bottom">
