@@ -94,7 +94,7 @@ MYSQL_PASSWORD=os.environ.get('MYSQL_PASSWORD')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'NAME': 'my_blog',
         'USER': 'huupc',
         'PASSWORD':MYSQL_PASSWORD ,
