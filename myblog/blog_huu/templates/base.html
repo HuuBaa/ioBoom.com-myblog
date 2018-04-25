@@ -42,19 +42,18 @@
 
 </nav>
 <div class="container">
-    <div class="row">
-        {% if messages %}
-        {% for message in messages %}
-        <div class=" alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
-        {% endfor %}
-        {% endif %}
-    </div>
 
-    <div class="row">
-        {% block content %}
-        <p>Use this template get you up and running with django-users2.</p>
-        {% endblock content %}
-    </div>
+    {% if messages %}
+    {% for message in messages %}
+    <div class=" alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}</div>
+    {% endfor %}
+    {% endif %}
+
+
+    {% block content %}
+    <p>Use this template get you up and running with django-users2.</p>
+    {% endblock content %}
+
 
 </div>
 <footer class="container-fluid fixed-bottom">
