@@ -1,32 +1,37 @@
 {% load form_tags %}
 
 {% if field.is_hidden %}
-	{{ field }}
+{{ field }}
 {% elif field|is_honeypot %}
-	{% include "users/partials/honeypot.html" %}
+{% include "users/partials/honeypot.html" %}
 {% else %}
-	<div class="form-group {{ field|input_class }} {{ field.css_classes }}{% if field|is_checkbox %} checkbox{% endif %}">
+<div class="form-group {{ field|input_class }} {{ field.css_classes }}{% if field|is_checkbox %} checkbox{% endif %}">
 
-		{% if field|is_checkbox %}
-			{{ field}}
-		{% endif %}
+    {% if field|is_checkbox %}
+    {{ field}}
+    {% endif %}
 
-		<label for="{{ field.id_for_label }}">
-			{{ field.label }}
-		</label>
+    <label for="{{ field.id_for_label }}">
+        {{ field.label }}
+    </label>
 
-		{% if not field|is_checkbox %}
-			{{ field }}
-		{% endif %}
-		<br>
-		{% if field.errors %}
-			<ul class="errorlist alert alert-danger">
-				{{ field.errors|unordered_list }}
-			</ul>
-		{% endif %}
+    {% if not field|is_checkbox %}
+    {{ field }}
+    {% endif %}
+    <br>
 
-		{% if field.help_text %}
-			<div class="help_text alert alert-info">{{ field.help_text|safe }}</div>
-		{% endif %}
-	</div>
+    {% if field.errors %}
+    <div class="pl-0 alert alert-danger alert-dismissible fade show" role="alert">
+            {{ field.errors}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    {% endif %}
+
+    {% if field.help_text %}
+    <div class="help_text alert alert-info pl-0">{{ field.help_text|safe }}</div>
+    {% endif %}
+</div>
 {% endif %}
