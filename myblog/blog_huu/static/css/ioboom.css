@@ -5,7 +5,7 @@ body {
 
 /*users模板*/
 #form-register, #form-reset, #form-reset-confirm, #form-change-pass {
-    width:400px;
+    max-width:350px;
     padding: 15px;
     margin: 0 auto;
 }
