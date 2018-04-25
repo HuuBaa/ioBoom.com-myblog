@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'article',
     'users',
-    'markdown_deux',
 ]
 
 MIDDLEWARE = [
@@ -174,5 +173,5 @@ EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = os.environ.get('MAIL_USERNAME')
 EMAIL_HOST_PASSWORD = os.environ.get('MAIL_PASSWORD')
-DEFAULT_FROM_EMAIL = '742790905@qq.com'
+DEFAULT_FROM_EMAIL = os.environ.get('MAIL_USERNAME')
 #  ---------------------------------------------------------
