@@ -9,8 +9,8 @@ class Article(models.Model):
     title=models.CharField(max_length=128)
     post_time=models.DateTimeField(default=timezone.now)
     author=models.ForeignKey(settings.AUTH_USER_MODEL,related_name='articles')
-    content=models.TextField(max_length=256*8)
-    summary=models.TextField(max_length=256)
+    content=models.TextField(max_length=1024*20)
+    summary=models.TextField(max_length=514)
     picture=models.ImageField(null=True,upload_to='article_images',)
     #Tag的实例可以使用t.articles查询相应tag下所有的article
     tags = models.ManyToManyField('Tag',blank=True,related_name='articles')
@@ -34,7 +34,7 @@ class Tag(models.Model):
 
 class Comment(models.Model):
     author=models.ForeignKey(settings.AUTH_USER_MODEL)
-    content=models.TextField(max_length=128)
+    content=models.TextField(max_length=256)
     post_time=models.DateTimeField(default=timezone.now)
     article=models.ForeignKey('Article',related_name='comments')
 

@@ -57,7 +57,7 @@ class UserCreationForm(forms.ModelForm):
         'password_mismatch': _('两次密码不一致'),
         'duplicate_username': _('用户名已经被使用'),
     }
-    username=forms.CharField(label=_('用户名'),max_length=12,required=True,widget=forms.TextInput(attrs={'class':'form-control'}))
+    username=forms.CharField(label=_('用户名'),max_length=16,required=True,widget=forms.TextInput(attrs={'class':'form-control'}))
     email = UsersEmailField(label=_('邮箱地址'), max_length=255,widget=forms.EmailInput(attrs={'class':'form-control'}))
     password1 = PasswordField(label=_('密码'),widget=forms.PasswordInput(attrs={'class':'form-control'}))
     password2 = PasswordField(
@@ -66,7 +66,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = get_user_model()
-        fields = ('email',)
+        fields = ('email','username','password1','password2')
 
     def clean_username(self):
         username=self.cleaned_data['username']
