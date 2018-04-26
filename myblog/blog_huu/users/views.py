@@ -292,7 +292,7 @@ def activate(request,
         if settings.USERS_AUTO_LOGIN_ON_ACTIVATION:
             user.backend = 'django.contrib.auth.backends.ModelBackend'  # todo - remove this hack
             login(request, user)
-            messages.info(request, '感谢注册，您现在已经成功登录')
+            messages.info(request, '感谢注册，您现在已经成功登录！')
         return redirect(post_activation_redirect)
     else:
         title = _('邮件确认失败')
