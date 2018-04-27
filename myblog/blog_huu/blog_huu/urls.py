@@ -24,7 +24,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$',views.index,name='index'),
     url(r'^article/',include('article.urls')),
-    url(r'^accounts/profile',views.profile,name='users_profile'),
+    url(r'^accounts/profile/(?P<user_id>[0-9]+)/$', views.profile, name='profile'),
+    url(r'^accounts/profile/edit/$', views.profile_edit, name='profile_edit'),
     url(r'^accounts/', include('users.urls')),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 

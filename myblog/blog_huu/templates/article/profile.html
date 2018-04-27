@@ -1,24 +1,42 @@
 {% extends 'article/base.html' %}
 {% load staticfiles %}
 
-{% block title_block %}
-Profile
+{% block title %}
+{{c_user.username}}的资料
 {% endblock %}
 
-{% block body_block %}
 
-<div class="form-wrapper">
-	<form method="post" action=".">
-		{% if form.errors %}
-			{% include "users/partials/errors.html" %}
-		{% endif %}
-		{% csrf_token %}
-		{% for field in form %}
-			{% include "users/partials/field.html" %}
-		{% endfor %}
-		<div class="button-wrapper submit">
-			<input type="submit" value="submit" />
-		</div>
-	</form>
+{% block content %}
+
+
+<div class="row">
+    <div class="col-lg-3">
+        {% if c_user.userprofile.picture %}
+        <img class="align-self-sm-start mr-3 rounded mt-1" src="{{MEDIA_URL}}{{c_user.userprofile.picture}}"
+             width="148" height="148" alt="头像">
+        {% else %}
+        <img class="align-self-sm-start mr-3 rounded mt-1" src="{{c_user.gravatar}}"
+             width="148" height="148" alt="头像">
+        {% endif %}
+
+        <h1>{{c_user.username}}</h1>
+        {% ifequal user c_user %}
+        <a href="{% url 'profile_edit' %}" class="btn btn-success">编辑个人资料</a>
+        {% endifequal %}
+
+    </div>
+    <div class="col-lg-9">
+
+        <div class="mt-4">
+            <p><strong>年龄：</strong>{{userprofile.age|default:"" }}</p>
+            <p><strong>生日：</strong>{{userprofile.birthday|default:""}}</p>
+            <p><strong>个人网站：</strong>{{userprofile.website|default:""}}</p>
+            <p><strong>家乡：</strong>{{userprofile.hometown|default:""}}</p>
+            <p><strong>个人简介：</strong>{{userprofile.introduction|default:""}}</p>
+        </div>
+
+    </div>
 </div>
+
+
 {% endblock %}

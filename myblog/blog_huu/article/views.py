@@ -9,6 +9,8 @@ import markdown
 from django.utils.text import slugify
 from markdown.extensions.toc import TocExtension
 from datetime import datetime,timedelta
+
+from users.models import User
 # Create your views here.
 
 def index(request):
@@ -143,7 +145,23 @@ def post_comment(request,article_id):
         return redirect(reverse('article:article_detail',args=[article_id,]))
 
 @login_required
-def profile(request):
-    form=UserProfileForm()
+def profile_edit(request):
+    user=request.user
+    userprofile=UserProfile.objects.get_or_create(user=user)[0]
+    form=UserProfileForm(instance=userprofile)
 
-    return render(request,'article/profile.html',{'form':form})
+    if request.method=='POST':
+        form=UserProfileForm(request.POST,request.FILES,instance=userprofile)
+        if form.is_valid():
+            form.save(commit=True)
+            return redirect(reverse('profile',args=[user.id,]))
+    return render(request,'article/profile_edit.html',{'form':form})
+
+def profile(request,user_id):
+    user=get_object_or_404(User,id=user_id)
+    userprofile=UserProfile.objects.get_or_create(user=user)[0]
+
+    return  render(request,'article/profile.html',{
+        'c_user':user,
+        'userprofile':userprofile
+    })
