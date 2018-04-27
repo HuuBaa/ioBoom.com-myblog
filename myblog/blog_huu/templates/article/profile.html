@@ -15,13 +15,15 @@
         <img class="align-self-sm-start mr-3 rounded mt-1" src="{{MEDIA_URL}}{{c_user.userprofile.picture}}"
              width="148" height="148" alt="头像">
         {% else %}
-        <img class="align-self-sm-start mr-3 rounded mt-1" src="{{c_user.gravatar}}"
+        <img class="align-self-sm-start mr-3 rounded mt-1" src="{{c_user.gravatar_320}}"
              width="148" height="148" alt="头像">
         {% endif %}
 
         <h1>{{c_user.username}}</h1>
         {% ifequal user c_user %}
         <a href="{% url 'profile_edit' %}" class="btn btn-success">编辑个人资料</a>
+
+        <a href="{% url 'users_password_change' %}" class="btn btn-primary mt-2">修改账户密码</a>
         {% endifequal %}
 
     </div>

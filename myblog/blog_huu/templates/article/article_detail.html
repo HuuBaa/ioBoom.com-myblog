@@ -78,7 +78,11 @@
              width="48" height="48" alt="头像">
         {% endif %}
         <div class="media-body">
-            <strong><h5 class="mt-0">{{c.author.username}}</h5></strong>
+            <strong>
+                <a href="{% url 'profile' c.author.id %}" style="text-decoration: none">
+                    <h5 class="mt-0">{{c.author.username}}</h5>
+                </a>
+            </strong>
             <p class="text-muted ">#{{forloop.counter}}楼&nbsp;&nbsp;{{c.post_time|date:"Y/m/d H:i"}}</p>
             <p>{{c.content}}</p>
         </div>
