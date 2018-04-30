@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http.response import HttpResponse
-from .models import Comment,Article,Tag,UserProfile
+from .models import Comment,Article,Tag,UserProfile,Subcomment
 from django.shortcuts import render,redirect,reverse,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator,PageNotAnInteger,EmptyPage
@@ -143,6 +143,22 @@ def post_comment(request,article_id):
         c=Comment.objects.create(article=article,author=author,content=content)
         #评论成功后刷新即可
         return redirect(reverse('article:article_detail',args=[article_id,]))
+
+
+@login_required
+def post_sub_comment(request,article_id):
+    if request.method=='POST':
+        article = get_object_or_404(Article, id=article_id)
+        author = request.user
+        content = request.POST.get('content')
+        reply_to_id=request.POST.get('reply_to_id')
+        parent_comment_id=request.POST.get('parent_comment_id')
+        reply_to=get_object_or_404(User,id=reply_to_id)
+        parent_comment=get_object_or_404(Comment,id=parent_comment_id)
+        c = Subcomment.objects.create(article=article, author=author, content=content,reply_to=reply_to,parent_comment=parent_comment)
+        # 评论成功后刷新即可
+        return redirect(reverse('article:article_detail', args=[article_id, ]))
+
 
 @login_required
 def profile_edit(request):

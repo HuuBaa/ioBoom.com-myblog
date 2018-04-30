@@ -8,7 +8,7 @@ from django.conf import settings
 class Article(models.Model):
     title=models.CharField(max_length=128)
     post_time=models.DateTimeField(default=timezone.now)
-    author=models.ForeignKey(settings.AUTH_USER_MODEL,related_name='articles')
+    author=models.ForeignKey(settings.AUTH_USER_MODEL,related_name='articles',on_delete=models.CASCADE)
     content=models.TextField(max_length=1024*20)
     summary=models.TextField(max_length=514)
     picture=models.ImageField(null=True,upload_to='article_images',)
@@ -33,11 +33,24 @@ class Tag(models.Model):
         return self.name
 
 class Comment(models.Model):
-    author=models.ForeignKey(settings.AUTH_USER_MODEL)
+    author=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     content=models.TextField(max_length=256)
     post_time=models.DateTimeField(default=timezone.now)
     article=models.ForeignKey('Article',related_name='comments')
 
+    def __str__(self):
+        return '评论<id:%s> 文章:%s '%(self.id,self.article)
+
+class Subcomment(models.Model):
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    content = models.TextField(max_length=256)
+    post_time = models.DateTimeField(default=timezone.now)
+    article = models.ForeignKey('Article')
+    parent_comment=models.ForeignKey(Comment,related_name='sub_comments',on_delete=models.CASCADE)
+    reply_to=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name='sub_comments')
+
+    def __str__(self):
+        return '子评论<id:%s> 文章:%s 回复给:%s '%(self.id,self.article,self.reply_to)
 
 class UserProfile(models.Model):
     user=models.OneToOneField(settings.AUTH_USER_MODEL)
@@ -48,3 +61,5 @@ class UserProfile(models.Model):
     hometown=models.CharField(max_length=64,blank=True,null=True)
     introduction=models.CharField(max_length=128,blank=True,null=True)
 
+    def __str__(self):
+        return str(self.user)

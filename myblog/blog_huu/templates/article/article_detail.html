@@ -66,9 +66,9 @@
 <div class="card rounded-0 border-0 mt-3">
     <h5 class="pt-4 pb-0 pl-4">{{comments.count}}条评论</h5>
     <hr>
+
     {% if comments %}
     {% for c in comments %}
-
     <div class="media  mt-1 px-3 ">
         {% if c.author.userprofile.picture %}
         <img class="align-self-sm-start mr-3 rounded mt-1" src="{{MEDIA_URL}}{{c.author.userprofile.picture}}"
@@ -78,24 +78,128 @@
              width="48" height="48" alt="头像">
         {% endif %}
         <div class="media-body">
-            <strong>
-                <a href="{% url 'profile' c.author.id %}" style="text-decoration: none">
-                    <h5 class="mt-0">{{c.author.username}}</h5>
+            <div>
+                <a href="{% url 'profile' c.author.id %}" style="text-decoration: none;color: #17a2b8;">
+                    <span class="font-weight-bold">{{c.author.username}}</span>
                 </a>
-            </strong>
-            <p class="text-muted ">#{{forloop.counter}}楼&nbsp;&nbsp;{{c.post_time|date:"Y/m/d H:i"}}</p>
+                <span class="text-muted small">
+                    #{{forloop.counter}}楼&nbsp;&nbsp;
+                    {{c.post_time|date:"Y-m-d H:i"}}</span>
+
+            </div>
+
             <p>{{c.content}}</p>
+
+            {% ifnotequal user c.author %}
+            <p class="small text-right">
+                <a data-toggle="collapse" href="#com_coll_{{c.id}}"
+                   style="text-decoration: none;color: gray;">
+                    回复</a>
+            </p>
+
+            <div id="com_coll_{{c.id}}" class="collapse">
+                <form action="{%  url 'article:article_sub_comment' article.id %}" method="post">
+
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <textarea class="form-control" name="content" rows="3" required maxlength="128"></textarea>
+                    </div>
+
+                    <input type="hidden" name="reply_to_id" value="{{c.author.id}}">
+                    <input type="hidden" name="parent_comment_id" value="{{c.id}}">
+                    <div class="form-group text-right">
+
+                        <button class="btn btn-info " type="submit">
+                            发表评论 <i class="fa fa-comment-o"></i>
+                        </button>
+                        &nbsp;
+                        <a data-toggle="collapse" class="btn btn-danger" href="#com_coll_{{c.id}}"
+                           style="text-decoration: none;">
+                            取消</a></p>
+                    </div>
+
+                </form>
+            </div>
+            {% endifnotequal %}
+            <!--二级评论-->
+            {% if c.sub_comments %}
+            {% for sub_c in c.sub_comments.all %}
+            <div class="media  mt-1 px-3 ">
+                {% if sub_c.author.userprofile.picture %}
+                <img class="align-self-sm-start mr-3 rounded mt-1"
+                     src="{{MEDIA_URL}}{{sub_c.author.userprofile.picture}}"
+                     width="48" height="48" alt="头像">
+                {% else %}
+                <img class="align-self-sm-start mr-3 rounded mt-1" src="{{sub_c.author.gravatar}}"
+                     width="48" height="48" alt="头像">
+                {% endif %}
+                <div class="media-body">
+                    <div>
+                        <a href="{% url 'profile' c.author.id %}" style="text-decoration: none; color: #17a2b8;">
+                            <strong>{{sub_c.author.username}}</strong>
+                        </a>
+                        <span class="text-muted small">
+                        <i class="fa fa-mail-forward"></i>
+                        </span>
+                        <span class="font-weight-bold text-muted">
+                            {{sub_c.reply_to.username}}
+                        </span>
+
+                        &nbsp;&nbsp;
+                        <span class="text-muted small">
+                        {{sub_c.post_time|date:"Y-m-d H:i"}}
+                        </span>
+                    </div>
+
+                    <p>{{sub_c.content}}</p>
+                    {% ifnotequal user sub_c.author %}
+                    <p class="small text-right">
+                        <a data-toggle="collapse" href="#sub_com_coll_{{sub_c.id}}"
+                           style="text-decoration: none;color: gray;">
+                            回复</a>
+                    </p>
+
+                    <div id="sub_com_coll_{{sub_c.id}}" class="collapse">
+                        <form action="{%  url 'article:article_sub_comment' article.id %}" method="post">
+
+                            {% csrf_token %}
+
+                            <div class="form-group">
+                                <textarea class="form-control" name="content" rows="3" required
+                                          maxlength="128"></textarea>
+                            </div>
+
+                            <input type="hidden" name="reply_to_id" value="{{sub_c.author.id}}">
+                            <input type="hidden" name="parent_comment_id" value="{{c.id}}">
+                            <div class="form-group text-right">
+
+                                <button class="btn btn-info " type="submit">
+                                    发表评论 <i class="fa fa-comment-o"></i>
+                                </button>
+                                &nbsp;
+                                <a data-toggle="collapse" class="btn btn-danger" href="#sub_com_coll_{{sub_c.id}}"
+                                   style="text-decoration: none;">
+                                    取消</a></p>
+                            </div>
+
+                        </form>
+                    </div>
+                    {% endifnotequal %}
+                </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <!--二级评论结束-->
         </div>
     </div>
-    {% if not forloop.last %}
-    <hr>
-    {% endif %}
+
     {% endfor%}
     {% else %}
     <p class="pt-4 pb-0 pl-4">暂无评论</p>
     {% endif %}
 </div>
-
 
 {% endblock %}
 
