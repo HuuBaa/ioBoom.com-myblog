@@ -90,6 +90,7 @@
 
             <p>{{c.content}}</p>
 
+            {% if user.is_authenticated %}
             {% ifnotequal user c.author %}
             <p class="small text-right">
                 <a data-toggle="collapse" href="#com_coll_{{c.id}}"
@@ -122,6 +123,7 @@
                 </form>
             </div>
             {% endifnotequal %}
+            {% endif %}
             <!--二级评论-->
             {% if c.sub_comments %}
             {% for sub_c in c.sub_comments.all %}
@@ -153,6 +155,7 @@
                     </div>
 
                     <p>{{sub_c.content}}</p>
+                    {% if user.is_authenticated %}
                     {% ifnotequal user sub_c.author %}
                     <p class="small text-right">
                         <a data-toggle="collapse" href="#sub_com_coll_{{sub_c.id}}"
@@ -186,6 +189,7 @@
                         </form>
                     </div>
                     {% endifnotequal %}
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
