@@ -186,5 +186,5 @@ EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = os.environ.get('MAIL_USERNAME')
 EMAIL_HOST_PASSWORD = os.environ.get('MAIL_PASSWORD')
-DEFAULT_FROM_EMAIL = "www.ioboom.com <%s>"%os.environ.get('MAIL_USERNAME')
+DEFAULT_FROM_EMAIL = "ioBoom <%s>"%os.environ.get('MAIL_USERNAME')
 #  ---------------------------------------------------------
