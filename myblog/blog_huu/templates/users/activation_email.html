@@ -1,10 +1,10 @@
 {% load i18n %}
 
-{% trans "感谢您在" %} {{ site.name }}注册账户
+{% trans "感谢您在" %} {{ site.name }} 注册账户
 {% trans "为了激活账户, 请复制链接到浏览器或直接点击链接访问:" %}
 
 {{ protocol }}://{{ site.domain }}{% url 'users_activate' uid token %}
 
 {% blocktrans %}这个链接会在 {{ expiration_days }} 天后失效。{% endblocktrans %}
 
-如果您没有在{{ site.name }}注册账户，请忽略本邮件。
+如果您没有在 {{ site.name }} 注册账户，请忽略本邮件。
