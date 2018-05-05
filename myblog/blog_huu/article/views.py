@@ -98,7 +98,7 @@ def visits_handler(request,article):
     last_view = request.session.get('article_{0}_last_view'.format(article.id))  # 获取最后一次浏览本站的时间last_view
     if last_view:
         last_visit_time = datetime.strptime(last_view[:-7], "%Y-%m-%d %H:%M:%S")
-        if datetime.now() >= last_visit_time + timedelta(seconds=10):  # 判断如果最后一次访问网站的时间大于20分钟，则浏览量+1
+        if datetime.now() >= last_visit_time + timedelta(minutes=5):  # 判断如果最后一次访问网站的时间大于20分钟，则浏览量+1
             article.views += 1
             article.save()
             last_visit_time = datetime.now()
