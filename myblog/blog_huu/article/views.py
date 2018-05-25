@@ -26,7 +26,7 @@ def all_articles(request):
 
     current_page = request.GET.get('page', 1)
 
-    paginator=Paginator(all_articles_list,1,request=request)
+    paginator=Paginator(all_articles_list,5,request=request)
 
     try:
         all_articles_list=paginator.page(current_page)
@@ -48,7 +48,7 @@ def tag_articles(request,tag_slug):
 
         current_page = request.GET.get('page', 1)
 
-        paginator = Paginator(tag_articles_list, 1, request=request)
+        paginator = Paginator(tag_articles_list, 5, request=request)
 
         try:
             tag_articles_list = paginator.page(current_page)
