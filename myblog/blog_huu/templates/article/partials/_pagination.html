@@ -2,7 +2,7 @@
     <ul class="pagination justify-content-center">
         {% if page.has_previous %}
         <li class="page-item">
-            <a class="page-link" href="{{page_url}}?page={{page.number|add:-1}}"
+            <a class="page-link" href="?{{ page.previous_page_number.querystring }}"
                tabindex="-1">上一页</a>
         </li>
         {% else %}
@@ -11,28 +11,31 @@
         </li>
         {% endif %}
 
-        {% for p in page_range%}
-        {% if p == page.number %}
-        <li class="page-item active">
-              <span class="page-link">
-                {{p}}
-                <span class="sr-only">(current)</span>
-              </span>
-        </li>
-        {% elif p == None %}
-        <li class="page-item disabled">
-             <span class="page-link ">...</span>
-        </li>
+        {% for p in page.pages %}
+            {%  if p %}
+                {% ifequal p  page.number %}
 
-        {% else %}
-        <li class="page-item"><a class="page-link" href="{{page_url}}?page={{p}}">{{p}}</a></li>
-        {% endif %}
+                <li class="page-item active">
+                      <span class="page-link">
+                        {{p}}
+                        <span class="sr-only">(current)</span>
+                      </span>
+                </li>
+                {% else %}
+                <li class="page-item"><a class="page-link" href="{{page_url}}?page={{p}}">{{p}}</a></li>
+                {% endifequal %}
+            {% else %}
+                <li class="page-item disabled">
+                     <span class="page-link ">...</span>
+                </li>
+            {% endif %}
+
         {% endfor %}
 
 
         {% if page.has_next %}
         <li class="page-item">
-            <a class="page-link" href="{{page_url}}?page={{page.number|add:1}}">下一页</a>
+            <a class="page-link" href="?{{ page.next_page_number.querystring }}">下一页</a>
         </li>
         {% else %}
         <li class="page-item disabled">

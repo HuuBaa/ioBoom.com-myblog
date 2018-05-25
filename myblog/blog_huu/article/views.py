@@ -10,6 +10,7 @@ from django.utils.text import slugify
 from markdown.extensions.toc import TocExtension
 from datetime import datetime,timedelta
 
+from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from users.models import User
 # Create your views here.
 
@@ -18,42 +19,23 @@ def index(request):
     return render(request,'article/index.html',{'articles':articles})
 
 
-def get_range_page(paginator,current_page):
-    # 分页过多解决
-    l = len(paginator.page_range)
-    mid1 = 1
-    mid2 = l - 1
-    page_range = list(paginator.page_range)
-    if l > 10:
-        if current_page - 3 > 1:
-            mid1 = current_page - 1 - 3
-        if current_page + 4 < l - 1:
-            mid2 = current_page + 4
-        page_range[1:mid1] = [None]
-        page_range[mid2:l - 1] = [None]
-    return page_range
 
 def all_articles(request):
 
     all_articles_list=Article.objects.order_by('-post_time').all()
 
-    current_page=request.GET.get('page',1)
-    paginator=Paginator(all_articles_list,5)
+    current_page = request.GET.get('page', 1)
 
-    page_range=get_range_page(paginator,int(current_page)-1)
+    paginator=Paginator(all_articles_list,1,request=request)
 
     try:
         all_articles_list=paginator.page(current_page)
     except PageNotAnInteger:
-        all_articles_list=paginator.page(1)
-    except EmptyPage:
-        all_articles_list=paginator.page(paginator.num_pages)
+        all_articles_list = paginator.page(1)
 
     con_dict={
         'articles':all_articles_list.object_list,
         'page':all_articles_list,
-        'page_range':page_range,
-        'page_url':reverse('article:all_articles')
     }
 
     return render(request,'article/all_articles.html',con_dict)
@@ -65,23 +47,19 @@ def tag_articles(request,tag_slug):
         tag_articles_list=tag.articles.order_by('-post_time').all()
 
         current_page = request.GET.get('page', 1)
-        paginator = Paginator(tag_articles_list, 5)
 
-        page_range = get_range_page(paginator, int(current_page)-1)
+        paginator = Paginator(tag_articles_list, 1, request=request)
 
         try:
             tag_articles_list = paginator.page(current_page)
         except PageNotAnInteger:
             tag_articles_list = paginator.page(1)
-        except EmptyPage:
-            tag_articles_list = paginator.page(paginator.num_pages)
+
 
         con_dict = {
             'tag':tag,
             'articles': tag_articles_list.object_list,
-            'page': tag_articles_list,
-            'page_range':page_range,
-            'page_url': reverse('article:tag_articles',args=[tag.slug,])
+            'page': tag_articles_list
         }
 
         return render(request, 'article/tag_articles.html', con_dict)
